@@ -4,4 +4,5 @@ action_recognition::action_recognition(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+
 }
