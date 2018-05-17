@@ -36,6 +36,15 @@
     <ClCompile Include="action_recognition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Vibe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ZernikeMoment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="action_recognition.h">
@@ -51,5 +60,16 @@
     <QtRcc Include="action_recognition.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Vibe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ZernikeMoment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

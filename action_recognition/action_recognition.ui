@@ -6,63 +6,160 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1240</width>
-    <height>898</height>
+    <width>1400</width>
+    <height>1000</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>action_recognition</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="">
+   <widget class="QPushButton" name="start">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>130</y>
-      <width>1091</width>
-      <height>291</height>
+      <x>1070</x>
+      <y>540</y>
+      <width>150</width>
+      <height>46</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Start</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>1312</width>
+      <height>482</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="traitImg">
-       <property name="text">
-        <string>traitImg</string>
-       </property>
-      </widget>
-     </item>
+     <property name="spacing">
+      <number>30</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMaximumSize</enum>
+     </property>
      <item>
       <widget class="QLabel" name="srcImg">
+       <property name="minimumSize">
+        <size>
+         <width>640</width>
+         <height>480</height>
+        </size>
+       </property>
        <property name="text">
         <string>srcImg</string>
        </property>
       </widget>
      </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>460</y>
-      <width>161</width>
-      <height>121</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QRadioButton" name="bgButton1">
+      <widget class="QLabel" name="traitImg">
+       <property name="minimumSize">
+        <size>
+         <width>640</width>
+         <height>480</height>
+        </size>
+       </property>
        <property name="text">
-        <string>高斯</string>
+        <string>traitImg</string>
        </property>
       </widget>
      </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>540</y>
+      <width>915</width>
+      <height>188</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>15</number>
+     </property>
      <item>
-      <widget class="QRadioButton" name="bgButton2">
-       <property name="text">
-        <string>Vibe</string>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>15</number>
        </property>
-      </widget>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMaximumSize</enum>
+       </property>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>源 文件 路径 ：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="srcPathText">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>10</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="srcToolButton">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMaximumSize</enum>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>保存文件路径 ：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="srcPathText_2">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>10</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="dstToolButton">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>
@@ -72,7 +169,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1240</width>
+     <width>1400</width>
      <height>37</height>
     </rect>
    </property>
@@ -91,5 +188,42 @@
  <resources>
   <include location="action_recognition.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>start</sender>
+   <signal>clicked()</signal>
+   <receiver>action_recognitionClass</receiver>
+   <slot>startProcess()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1173</x>
+     <y>627</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1093</x>
+     <y>751</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>srcToolButton</sender>
+   <signal>clicked()</signal>
+   <receiver>action_recognitionClass</receiver>
+   <slot>srcPath()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>921</x>
+     <y>619</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>991</x>
+     <y>605</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>startProcess()</slot>
+  <slot>srcPath()</slot>
+ </slots>
 </ui>
