@@ -20,6 +20,8 @@
 #include <QtWidgets/QMainWindow>
 #include <QFileDialog> 
 #include <QCombobox.h>
+#include <QLabel.h>
+#include <QTimer.h>
 #include "ui_action_recognition.h"
 #include "Vibe.h"
 #include "util.h"
@@ -40,6 +42,7 @@ class action_recognition : public QMainWindow
 public:
 	action_recognition(QWidget *parent = Q_NULLPTR);
 	cv::Mat image;
+	cv::Mat srcImage;
 
 private:
 	Ui::action_recognitionClass ui;
@@ -47,8 +50,11 @@ private:
 	Mat elem5 = getStructuringElement(MORPH_RECT, Size(5, 5));
 	Mat elem7 = getStructuringElement(MORPH_RECT, Size(7, 7));
 
-	QString sp;//数据路径
-	string FilePath;
+	QString rgbPath;//源数据路径
+	QString grayPath;//灰度图路径
+	string stdRgbPath;
+	string stdGrayPath;
+
 	VideoCapture capture;
 	vector< String > files;
 	ViBe_BGS Vibe_Bgs;
@@ -65,7 +71,7 @@ private:
 	Ptr< SVM > svm2;
 
 	int imgCount;
-	Mat src;
+	//Mat src;
 	Mat mask;
 	Wicket bound;
 
@@ -73,8 +79,13 @@ private:
 	float z_modes[10];
 	ZernikeMoment *z_m;
 
+	//帧播放
+	QTimer *time_clock;
+
 
 private slots:              //声明信号函数  
-	void startProcess();
-	void srcPath();
+	void frameProcess();
+	void getRgbPath();
+	void showFrame(Mat src);
+	void start();
 };

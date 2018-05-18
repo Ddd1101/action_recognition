@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1400</width>
-    <height>1000</height>
+    <width>1618</width>
+    <height>778</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="start">
     <property name="geometry">
      <rect>
-      <x>1070</x>
-      <y>540</y>
+      <x>1190</x>
+      <y>530</y>
       <width>150</width>
       <height>46</height>
      </rect>
@@ -30,18 +30,15 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>1312</width>
+      <x>70</x>
+      <y>20</y>
+      <width>1482</width>
       <height>482</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <property name="spacing">
-      <number>30</number>
-     </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
      <property name="sizeConstraint">
-      <enum>QLayout::SetMaximumSize</enum>
+      <enum>QLayout::SetMinimumSize</enum>
      </property>
      <item>
       <widget class="QLabel" name="srcImg">
@@ -57,15 +54,58 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="traitImg">
-       <property name="minimumSize">
-        <size>
-         <width>640</width>
-         <height>480</height>
-        </size>
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="text">
-        <string>traitImg</string>
+        <string>svm 1 :</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPlainTextEdit" name="svm1Text">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <pointsize>15</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>svm 2 :</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPlainTextEdit" name="svm2Text">
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>300</width>
+         <height>16777215</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -74,49 +114,40 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>540</y>
-      <width>915</width>
-      <height>188</height>
+      <x>70</x>
+      <y>530</y>
+      <width>976</width>
+      <height>125</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
-     <property name="spacing">
-      <number>15</number>
-     </property>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <property name="spacing">
-        <number>15</number>
-       </property>
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMaximumSize</enum>
-       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>源 文件 路径 ：</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTextEdit" name="srcPathText">
+        <widget class="QLabel" name="rgbLabel">
          <property name="minimumSize">
           <size>
-           <width>0</width>
-           <height>10</height>
+           <width>60</width>
+           <height>0</height>
           </size>
          </property>
-         <property name="maximumSize">
+         <property name="text">
+          <string> 源 文件位置 : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="rgbPath">
+         <property name="minimumSize">
           <size>
-           <width>16777215</width>
-           <height>30</height>
+           <width>640</width>
+           <height>0</height>
           </size>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="srcToolButton">
+        <widget class="QToolButton" name="rgbToolButton">
          <property name="text">
           <string>...</string>
          </property>
@@ -125,32 +156,49 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMaximumSize</enum>
-       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout2">
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="grayLabel">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="text">
-          <string>保存文件路径 ：</string>
+          <string>灰度文件位置 : </string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="srcPathText_2">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>10</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
+        <widget class="QLineEdit" name="grayPath"/>
+       </item>
+       <item>
+        <widget class="QToolButton" name="grayToolButton">
+         <property name="text">
+          <string>...</string>
          </property>
         </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout3">
+       <item>
+        <widget class="QLabel" name="dstLabel">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>保存文件位置 : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="dstPath"/>
        </item>
        <item>
         <widget class="QToolButton" name="dstToolButton">
@@ -169,7 +217,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1400</width>
+     <width>1618</width>
      <height>37</height>
     </rect>
    </property>
@@ -193,37 +241,37 @@
    <sender>start</sender>
    <signal>clicked()</signal>
    <receiver>action_recognitionClass</receiver>
-   <slot>startProcess()</slot>
+   <slot>start()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1173</x>
-     <y>627</y>
+     <x>1190</x>
+     <y>634</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1093</x>
-     <y>751</y>
+     <x>1319</x>
+     <y>805</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>srcToolButton</sender>
+   <sender>rgbToolButton</sender>
    <signal>clicked()</signal>
    <receiver>action_recognitionClass</receiver>
-   <slot>srcPath()</slot>
+   <slot>getRgbPath()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>921</x>
-     <y>619</y>
+     <x>1027</x>
+     <y>607</y>
     </hint>
     <hint type="destinationlabel">
-     <x>991</x>
+     <x>1119</x>
      <y>605</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>startProcess()</slot>
-  <slot>srcPath()</slot>
+  <slot>start()</slot>
+  <slot>getRgbPath()</slot>
  </slots>
 </ui>

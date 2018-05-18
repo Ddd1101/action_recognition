@@ -16,11 +16,12 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QToolButton>
 #include <QtWidgets/QVBoxLayout>
@@ -34,18 +35,25 @@ public:
     QWidget *centralWidget;
     QPushButton *start;
     QWidget *layoutWidget;
-    QHBoxLayout *horizontalLayout;
+    QHBoxLayout *horizontalLayout_3;
     QLabel *srcImg;
-    QLabel *traitImg;
+    QLabel *label;
+    QPlainTextEdit *svm1Text;
+    QLabel *label_2;
+    QPlainTextEdit *svm2Text;
     QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout;
-    QHBoxLayout *horizontalLayout_2;
-    QLabel *label;
-    QTextEdit *srcPathText;
-    QToolButton *srcToolButton;
-    QHBoxLayout *horizontalLayout_3;
-    QLabel *label_2;
-    QTextEdit *srcPathText_2;
+    QHBoxLayout *horizontalLayout;
+    QLabel *rgbLabel;
+    QLineEdit *rgbPath;
+    QToolButton *rgbToolButton;
+    QHBoxLayout *horizontalLayout2;
+    QLabel *grayLabel;
+    QLineEdit *grayPath;
+    QToolButton *grayToolButton;
+    QHBoxLayout *horizontalLayout3;
+    QLabel *dstLabel;
+    QLineEdit *dstPath;
     QToolButton *dstToolButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
@@ -55,93 +63,134 @@ public:
     {
         if (action_recognitionClass->objectName().isEmpty())
             action_recognitionClass->setObjectName(QStringLiteral("action_recognitionClass"));
-        action_recognitionClass->resize(1400, 1000);
+        action_recognitionClass->resize(1618, 778);
         centralWidget = new QWidget(action_recognitionClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         start = new QPushButton(centralWidget);
         start->setObjectName(QStringLiteral("start"));
-        start->setGeometry(QRect(1070, 540, 150, 46));
+        start->setGeometry(QRect(1190, 530, 150, 46));
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(20, 10, 1312, 482));
-        horizontalLayout = new QHBoxLayout(layoutWidget);
-        horizontalLayout->setSpacing(30);
-        horizontalLayout->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        horizontalLayout->setSizeConstraint(QLayout::SetMaximumSize);
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        layoutWidget->setGeometry(QRect(70, 20, 1482, 482));
+        horizontalLayout_3 = new QHBoxLayout(layoutWidget);
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setSizeConstraint(QLayout::SetMinimumSize);
+        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
         srcImg = new QLabel(layoutWidget);
         srcImg->setObjectName(QStringLiteral("srcImg"));
         srcImg->setMinimumSize(QSize(640, 480));
 
-        horizontalLayout->addWidget(srcImg);
+        horizontalLayout_3->addWidget(srcImg);
 
-        traitImg = new QLabel(layoutWidget);
-        traitImg->setObjectName(QStringLiteral("traitImg"));
-        traitImg->setMinimumSize(QSize(640, 480));
-
-        horizontalLayout->addWidget(traitImg);
-
-        layoutWidget1 = new QWidget(centralWidget);
-        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(20, 540, 915, 188));
-        verticalLayout = new QVBoxLayout(layoutWidget1);
-        verticalLayout->setSpacing(15);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setSpacing(15);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        horizontalLayout_2->setSizeConstraint(QLayout::SetMaximumSize);
-        label = new QLabel(layoutWidget1);
+        label = new QLabel(layoutWidget);
         label->setObjectName(QStringLiteral("label"));
+        QFont font;
+        font.setPointSize(15);
+        label->setFont(font);
 
-        horizontalLayout_2->addWidget(label);
+        horizontalLayout_3->addWidget(label);
 
-        srcPathText = new QTextEdit(layoutWidget1);
-        srcPathText->setObjectName(QStringLiteral("srcPathText"));
-        srcPathText->setMinimumSize(QSize(0, 10));
-        srcPathText->setMaximumSize(QSize(16777215, 30));
+        svm1Text = new QPlainTextEdit(layoutWidget);
+        svm1Text->setObjectName(QStringLiteral("svm1Text"));
+        svm1Text->setMinimumSize(QSize(50, 0));
+        svm1Text->setMaximumSize(QSize(100, 16777215));
 
-        horizontalLayout_2->addWidget(srcPathText);
+        horizontalLayout_3->addWidget(svm1Text);
 
-        srcToolButton = new QToolButton(layoutWidget1);
-        srcToolButton->setObjectName(QStringLiteral("srcToolButton"));
-
-        horizontalLayout_2->addWidget(srcToolButton);
-
-
-        verticalLayout->addLayout(horizontalLayout_2);
-
-        horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        horizontalLayout_3->setSizeConstraint(QLayout::SetMaximumSize);
-        label_2 = new QLabel(layoutWidget1);
+        label_2 = new QLabel(layoutWidget);
         label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setFont(font);
 
         horizontalLayout_3->addWidget(label_2);
 
-        srcPathText_2 = new QTextEdit(layoutWidget1);
-        srcPathText_2->setObjectName(QStringLiteral("srcPathText_2"));
-        srcPathText_2->setMinimumSize(QSize(0, 10));
-        srcPathText_2->setMaximumSize(QSize(16777215, 30));
+        svm2Text = new QPlainTextEdit(layoutWidget);
+        svm2Text->setObjectName(QStringLiteral("svm2Text"));
+        svm2Text->setMinimumSize(QSize(300, 0));
+        svm2Text->setMaximumSize(QSize(300, 16777215));
 
-        horizontalLayout_3->addWidget(srcPathText_2);
+        horizontalLayout_3->addWidget(svm2Text);
+
+        layoutWidget1 = new QWidget(centralWidget);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(70, 530, 976, 125));
+        verticalLayout = new QVBoxLayout(layoutWidget1);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        rgbLabel = new QLabel(layoutWidget1);
+        rgbLabel->setObjectName(QStringLiteral("rgbLabel"));
+        rgbLabel->setMinimumSize(QSize(60, 0));
+
+        horizontalLayout->addWidget(rgbLabel);
+
+        rgbPath = new QLineEdit(layoutWidget1);
+        rgbPath->setObjectName(QStringLiteral("rgbPath"));
+        rgbPath->setMinimumSize(QSize(640, 0));
+
+        horizontalLayout->addWidget(rgbPath);
+
+        rgbToolButton = new QToolButton(layoutWidget1);
+        rgbToolButton->setObjectName(QStringLiteral("rgbToolButton"));
+
+        horizontalLayout->addWidget(rgbToolButton);
+
+
+        verticalLayout->addLayout(horizontalLayout);
+
+        horizontalLayout2 = new QHBoxLayout();
+        horizontalLayout2->setSpacing(6);
+        horizontalLayout2->setObjectName(QStringLiteral("horizontalLayout2"));
+        grayLabel = new QLabel(layoutWidget1);
+        grayLabel->setObjectName(QStringLiteral("grayLabel"));
+        grayLabel->setMinimumSize(QSize(60, 0));
+
+        horizontalLayout2->addWidget(grayLabel);
+
+        grayPath = new QLineEdit(layoutWidget1);
+        grayPath->setObjectName(QStringLiteral("grayPath"));
+
+        horizontalLayout2->addWidget(grayPath);
+
+        grayToolButton = new QToolButton(layoutWidget1);
+        grayToolButton->setObjectName(QStringLiteral("grayToolButton"));
+
+        horizontalLayout2->addWidget(grayToolButton);
+
+
+        verticalLayout->addLayout(horizontalLayout2);
+
+        horizontalLayout3 = new QHBoxLayout();
+        horizontalLayout3->setSpacing(6);
+        horizontalLayout3->setObjectName(QStringLiteral("horizontalLayout3"));
+        dstLabel = new QLabel(layoutWidget1);
+        dstLabel->setObjectName(QStringLiteral("dstLabel"));
+        dstLabel->setMinimumSize(QSize(60, 0));
+
+        horizontalLayout3->addWidget(dstLabel);
+
+        dstPath = new QLineEdit(layoutWidget1);
+        dstPath->setObjectName(QStringLiteral("dstPath"));
+
+        horizontalLayout3->addWidget(dstPath);
 
         dstToolButton = new QToolButton(layoutWidget1);
         dstToolButton->setObjectName(QStringLiteral("dstToolButton"));
 
-        horizontalLayout_3->addWidget(dstToolButton);
+        horizontalLayout3->addWidget(dstToolButton);
 
 
-        verticalLayout->addLayout(horizontalLayout_3);
+        verticalLayout->addLayout(horizontalLayout3);
 
         action_recognitionClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(action_recognitionClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1400, 37));
+        menuBar->setGeometry(QRect(0, 0, 1618, 37));
         action_recognitionClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(action_recognitionClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -151,8 +200,8 @@ public:
         action_recognitionClass->setStatusBar(statusBar);
 
         retranslateUi(action_recognitionClass);
-        QObject::connect(start, SIGNAL(clicked()), action_recognitionClass, SLOT(startProcess()));
-        QObject::connect(srcToolButton, SIGNAL(clicked()), action_recognitionClass, SLOT(srcPath()));
+        QObject::connect(start, SIGNAL(clicked()), action_recognitionClass, SLOT(start()));
+        QObject::connect(rgbToolButton, SIGNAL(clicked()), action_recognitionClass, SLOT(getRgbPath()));
 
         QMetaObject::connectSlotsByName(action_recognitionClass);
     } // setupUi
@@ -162,10 +211,13 @@ public:
         action_recognitionClass->setWindowTitle(QApplication::translate("action_recognitionClass", "action_recognition", Q_NULLPTR));
         start->setText(QApplication::translate("action_recognitionClass", "Start", Q_NULLPTR));
         srcImg->setText(QApplication::translate("action_recognitionClass", "srcImg", Q_NULLPTR));
-        traitImg->setText(QApplication::translate("action_recognitionClass", "traitImg", Q_NULLPTR));
-        label->setText(QApplication::translate("action_recognitionClass", "\346\272\220 \346\226\207\344\273\266 \350\267\257\345\276\204 \357\274\232", Q_NULLPTR));
-        srcToolButton->setText(QApplication::translate("action_recognitionClass", "...", Q_NULLPTR));
-        label_2->setText(QApplication::translate("action_recognitionClass", "\344\277\235\345\255\230\346\226\207\344\273\266\350\267\257\345\276\204 \357\274\232", Q_NULLPTR));
+        label->setText(QApplication::translate("action_recognitionClass", "svm 1 :", Q_NULLPTR));
+        label_2->setText(QApplication::translate("action_recognitionClass", "svm 2 :", Q_NULLPTR));
+        rgbLabel->setText(QApplication::translate("action_recognitionClass", " \346\272\220 \346\226\207\344\273\266\344\275\215\347\275\256 : ", Q_NULLPTR));
+        rgbToolButton->setText(QApplication::translate("action_recognitionClass", "...", Q_NULLPTR));
+        grayLabel->setText(QApplication::translate("action_recognitionClass", "\347\201\260\345\272\246\346\226\207\344\273\266\344\275\215\347\275\256 : ", Q_NULLPTR));
+        grayToolButton->setText(QApplication::translate("action_recognitionClass", "...", Q_NULLPTR));
+        dstLabel->setText(QApplication::translate("action_recognitionClass", "\344\277\235\345\255\230\346\226\207\344\273\266\344\275\215\347\275\256 : ", Q_NULLPTR));
         dstToolButton->setText(QApplication::translate("action_recognitionClass", "...", Q_NULLPTR));
     } // retranslateUi
 

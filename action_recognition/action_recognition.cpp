@@ -4,8 +4,10 @@ action_recognition::action_recognition(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	sp.clear();
-	FilePath = "";
+	rgbPath.clear();
+	grayPath.clear();
+	stdRgbPath = "";
+	stdGrayPath = "";
 	//svm1
 	train_data1 = ml::TrainData::loadFromCSV("C:\\dataset\\svm1\\stand_pos.csv", 1);
 	m1 = train_data1->getTrainSamples();
@@ -55,30 +57,61 @@ action_recognition::action_recognition(QWidget *parent)
 	imgCount = 0;
 
 	z_m=new ZernikeMoment();
+
+	//ui.srcPathText->setText("C:\\dataset\\dataset\\pos\\1");
+
+	//帧播放
+	time_clock = new QTimer();
+	time_clock->setInterval(10);
+	time_clock->stop();
+	connect(time_clock, SIGNAL(timeout()), this, SLOT(frameProcess()));
+
+	QPixmap myPix("C:\\default.jpg");
+	ui.srcImg->setPixmap(myPix);
+	ui.srcImg->show();
+
+	//地址默认值
+	QString pathTmp = "C:\\dataset\\src\\pos\\1";
+	ui.rgbPath->setText(pathTmp);
+
+	ui.svm1Text->setReadOnly(true);
+	ui.svm2Text->setReadOnly(true);
 }
 
-void action_recognition::startProcess() {
+void action_recognition::start() {
+	time_clock->start();
 	imgCount = 0;
-	//cv::cvtColor(image, image, CV_RGB2RGBA);//图像在QT显示前，必须转化成QImage格式，将RGBA格式转化成RGB  
-	FilePath = sp.toStdString();
-	glob(FilePath, files);
-	//capture=VideoCapture(sp.toStdString());
-	while (imgCount<files.size()) {
-		src = imread(files[imgCount]);
-		cvtColor(src, src, COLOR_RGB2GRAY);
-		if (src.empty() == 1) {
-			break;
-		}
+	stdRgbPath = ui.rgbPath->text().toStdString();
+	
+}
+
+void action_recognition::frameProcess() {
+	////cv::cvtColor(image, image, CV_RGB2RGBA);//图像在QT显示前，必须转化成QImage格式，将RGBA格式转化成RGB  
+	//stdRgbPath = rgbPath.toStdString();
+	//cout << stdRgbPath << endl;
+	glob(stdRgbPath, files);
+	//if (imgCount < files.size()) {
+	//	image = cv::imread(files[imgCount]);//读取图像  
+	//	cv::cvtColor(image, image, CV_RGB2RGBA);//图像在QT显示前，必须转化成QImage格式，将RGBA格式转化成RGB  
+	//	showFrame(image);
+	//}
+	int isStand = 0;
+	float svm2Res=0;
+	if (imgCount < files.size()) {
+		image = cv::imread(files[imgCount]);
+		Mat tmp;
+		cvtColor(image, tmp, COLOR_RGB2GRAY);
+		cv::cvtColor(image, image, CV_RGB2RGBA);
+		showFrame(image);
 		if (imgCount == 0) {
-			Vibe_Bgs.init(src);
-			Vibe_Bgs.processFirstFrame(src);
+			Vibe_Bgs.init(tmp);
+			Vibe_Bgs.processFirstFrame(tmp);
 			cout << "training gmm compelete" << endl;
 		}
 		else {
 			//threshold(src, src, 0,255, THRESH_BINARY);//最大类间差
-			Vibe_Bgs.testAndUpdate(src);
+			Vibe_Bgs.testAndUpdate(tmp);
 			mask = Vibe_Bgs.getMask();
-			//morphologyEx(mask, mask, MORPH_OPEN, elem3);
 
 			morphologyEx(mask, mask, MORPH_OPEN, elem7);//开运算=腐蚀+膨胀
 			morphologyEx(mask, mask, MORPH_CLOSE, elem7);//闭运算=膨胀+腐蚀
@@ -86,8 +119,7 @@ void action_recognition::startProcess() {
 
 			bound = filterBg_boundRect(mask);
 
-			bool isStand = 0;
-
+			isStand = 0;
 			//svm1-站姿检测
 			if (bound.isEx == 1) {
 				float labels[4] = { float(bound.width) / float(bound.height), bound.width * bound.height, bound.width + bound.height, bound.height };
@@ -129,30 +161,43 @@ void action_recognition::startProcess() {
 				z_modes[index] = float(bound.width) / float(bound.height);
 
 				Mat test(1, 10, CV_32F, z_modes);
-				float response = svm2->predict(test);
-				cout << "svm2  : " << response;
+				svm2Res = svm2->predict(test);
+				cout << "svm2  : " << svm2Res;
 			}
 			cout << endl;
-
-			imshow("src",src);
-
-			QImage srcShow = QImage((const unsigned char*)(src.data),
-				image.cols, image.rows, QImage::Format_Indexed8);
-			ui.srcImg->setPixmap(QPixmap::fromImage(srcShow));
-			ui.srcImg->show();
-			ui.traitImg->setPixmap(QPixmap::fromImage(srcShow));
-			ui.traitImg->show();
-			int a;
-			cin >> a;
 		}
-		imgCount++;
 	}
+	auto workCursor1 = ui.svm1Text->textCursor();
+	workCursor1.movePosition(QTextCursor::Start);
+	workCursor1.insertText(QString::number(isStand, 10));
+	workCursor1.insertBlock();
+
+	//移动滚动条到底部
+	QScrollBar *scrollbar = ui.svm1Text->verticalScrollBar();
 	
+
+	auto workCursor2 = ui.svm2Text->textCursor();
+	workCursor2.movePosition(QTextCursor::Start);
+	workCursor2.insertText(QString("%1").arg(svm2Res));
+	workCursor2.insertBlock();
+
+	if (imgCount==(files.size()-1)) {
+		time_clock->stop();
+	}
+
+	imgCount++;
 }
 
-void action_recognition::srcPath() {
-	sp = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Save path"), QDir::currentPath()));
-	if (!sp.isEmpty()) {
-		ui.srcPathText->setText(sp);
+void action_recognition::getRgbPath() {
+	rgbPath = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Save path"), QDir::currentPath()));
+	if (!rgbPath.isEmpty()){
+		ui.rgbPath->setText(rgbPath);
 	}
+}
+
+void action_recognition::showFrame(Mat src) {
+	QImage img = QImage((const unsigned char*)(image.data),
+		image.cols, image.rows, QImage::Format_RGB32);
+	ui.srcImg->setPixmap(QPixmap::fromImage(img));
+	ui.srcImg->show();
 }
