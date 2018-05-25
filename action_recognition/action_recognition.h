@@ -43,6 +43,10 @@ public:
 	action_recognition(QWidget *parent = Q_NULLPTR);
 	cv::Mat image;
 	cv::Mat srcImage;
+	cv::Mat srcGray;
+	cv::Mat lightTrait;
+	cv::Mat whTraitImg;
+	cv::Mat coreTraitImg;
 
 private:
 	Ui::action_recognitionClass ui;
@@ -56,7 +60,8 @@ private:
 	string stdGrayPath;
 
 	VideoCapture capture;
-	vector< String > files;
+	vector< String > rgbFiles;
+	vector< String > grayFiles;
 	ViBe_BGS Vibe_Bgs;
 	//svm1训练数据
 	Ptr<ml::TrainData> train_data1;
@@ -82,10 +87,21 @@ private:
 	//帧播放
 	QTimer *time_clock;
 
+	//宽高特征
+	queue<float> whTrait;
+	
+	//重心特征
+	queue<float> coreTrait;
+
 
 private slots:              //声明信号函数  
 	void frameProcess();
 	void getRgbPath();
-	void showFrame(Mat src);
+	void showSrcFrame();
+	void showBgFrame();
+	void showLTFrame();
+	void showWHTFrame();
+	void showCTFrame();
 	void start();
+	void stop();
 };

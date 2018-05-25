@@ -47,7 +47,7 @@ void filterBg(Mat &mask) {
 	sort(contours.begin(), contours.end(), ContoursSortFun);
 	Mat toMask(mask.size(), CV_8UC3, Scalar(0, 0, 0));//´´½¨Ò»¸öÈ«ºÚµÄÍ¼Æ¬
 	vector<vector<Point>> ::iterator it;
-	if (contours.size() > 0 && contours[0].size()>250) {
+	if (contours.size() > 0 && contours[0].size() > 250) {
 		drawContours(toMask, contours, 0, Scalar(255, 255, 255), -1);
 		cvtColor(toMask, mask, CV_BGR2GRAY);
 	}
@@ -66,7 +66,7 @@ Wicket filterBg_boundRect(Mat &mask) {
 	sort(contours.begin(), contours.end(), ContoursSortFun);
 	Mat toMask(mask.size(), CV_8UC3, Scalar(0, 0, 0));//´´½¨Ò»¸öÈ«ºÚµÄÍ¼Æ¬
 	vector<vector<Point>> ::iterator it;
-	if (contours.size() > 0 && contours[0].size()>250) {
+	if (contours.size() > 0 && contours[0].size() > 250) {
 		drawContours(toMask, contours, 0, Scalar(255, 255, 255), -1);
 		cvtColor(toMask, mask, CV_BGR2GRAY);
 		boundRect = boundingRect(Mat(contours[0]));
@@ -75,6 +75,21 @@ Wicket filterBg_boundRect(Mat &mask) {
 		result.y = boundRect.y;
 		result.height = boundRect.height;
 		result.width = boundRect.width;
+
+		IplImage tmp = IplImage(mask);
+		CvPoint center;
+		double m00, m10, m01;
+		CvMoments moment;
+		double top, bottom;
+		cvMoments((CvArr*)&tmp, &moment, 1);
+		m00 = cvGetSpatialMoment(&moment, 0, 0);
+		m10 = cvGetSpatialMoment(&moment, 1, 0);
+		m01 = cvGetSpatialMoment(&moment, 0, 1);
+		center.x = (int)(m10 / m00);
+		center.y = (int)(m01 / m00);
+		top = boundRect.y;
+		bottom = boundRect.y + boundRect.height;
+		result.core = (bottom - center.y) / boundRect.height;
 	}
 	else {
 		toMask.copyTo(mask);
@@ -97,7 +112,7 @@ Wicket core(Mat mask) {
 	//ÖØÐÄ
 	double top, bottom;
 	double s;
-	if (contours.size() > 0 && contours[0].size()>250) {
+	if (contours.size() > 0 && contours[0].size() > 250) {
 		result.isEx = 1;
 		drawContours(toMask, contours, 0, Scalar(255, 255, 255), -1);
 		cvtColor(toMask, mask, CV_BGR2GRAY);
@@ -214,9 +229,9 @@ Mat RegionGrow(Mat MatIn, int iGrowPoint, int iGrowJudge) {//iGrowPointÎªÖÖ×Óµãµ
 	Mat MatGrowCur(MatIn.size(), CV_8UC1, Scalar(0));
 	Mat MatGrowTemp(MatIn.size(), CV_8UC1, Scalar(0));
 	//³õÊ¼»¯Ô­Ê¼ÖÖ×Óµã
-	for (int i = 0; i<MatIn.rows; i++)
+	for (int i = 0; i < MatIn.rows; i++)
 	{
-		for (int j = 0; j<MatIn.cols; j++)
+		for (int j = 0; j < MatIn.cols; j++)
 		{
 			int it = MatIn.at<uchar>(i, j);
 
@@ -233,19 +248,19 @@ Mat RegionGrow(Mat MatIn, int iGrowPoint, int iGrowJudge) {//iGrowPointÎªÖÖ×Óµãµ
 	if (iJudge != 0)//MatGrowOld!=MatGrowCur ÅÐ¶Ï±¾´ÎºÍÉÏ´ÎµÄÖÖ×ÓµãÊÇ·ñÒ»Ñù£¬Èç¹ûÒ»ÑùÔòÖÕÖ¹Ñ­»·
 	{
 		MatGrowTemp = MatGrowCur;
-		for (int i = 0; i<MatIn.rows; i++)
+		for (int i = 0; i < MatIn.rows; i++)
 		{
-			for (int j = 0; j<MatIn.cols; j++)
+			for (int j = 0; j < MatIn.cols; j++)
 			{
 				if (MatGrowCur.at<uchar>(i, j) == 255 && MatGrowOld.at<uchar>(i, j) != 255)
 				{
-					for (int iNum = 0; iNum<9; iNum++)
+					for (int iNum = 0; iNum < 9; iNum++)
 					{
 						int iCurPosX = i + DIR[iNum][0];
 						int iCurPosY = j + DIR[iNum][1];
-						if (iCurPosX>0 && iCurPosX<(MatIn.rows - 1) && iCurPosY>0 && iCurPosY<(MatIn.cols - 1))
+						if (iCurPosX > 0 && iCurPosX < (MatIn.rows - 1) && iCurPosY>0 && iCurPosY < (MatIn.cols - 1))
 						{
-							if (abs(MatIn.at<uchar>(i, j) - MatIn.at<uchar>(iCurPosX, iCurPosY))<iGrowJudge)//Éú³¤Ìõ¼þ£¬×Ô¼ºµ÷Õû
+							if (abs(MatIn.at<uchar>(i, j) - MatIn.at<uchar>(iCurPosX, iCurPosY)) < iGrowJudge)//Éú³¤Ìõ¼þ£¬×Ô¼ºµ÷Õû
 							{
 								MatGrowCur.at<uchar>(iCurPosX, iCurPosY) = 255;
 
@@ -260,28 +275,32 @@ Mat RegionGrow(Mat MatIn, int iGrowPoint, int iGrowJudge) {//iGrowPointÎªÖÖ×Óµãµ
 	return MatGrowCur;
 }
 
-void lightTrait() {//Ï¡Êè¹âÁ÷ÌØÕ÷
-
-	Mat src0;
-	Mat src1;
+Mat getLightTrait(string p1, string p2) {//Ï¡Êè¹âÁ÷ÌØÕ÷
+	Mat src0 = imread(p1);
+	Mat src1 = imread(p2);
 	Mat gray0;
-	/*Mat gray1;
-	Mat src0 = imread(files2[count++], CV_LOAD_IMAGE_COLOR);
-	Mat src1 = imread(files2[count], CV_LOAD_IMAGE_COLOR);
+	Mat gray1;
+	int corner_count = 5000;
+	vector<Point2f> corners0;
+	vector<Point2f> corners1;
+	Mat trait(480, 640, CV_8UC1, Scalar(0));
+
+
 	cvtColor(src0, gray0, CV_BGR2GRAY);
 	goodFeaturesToTrack(gray0, corners0, corner_count, 0.01, 5, Mat(), 3, false, 0.04);
 	cornerSubPix(gray0, corners0, Size(10, 10), Size(-1, -1), TermCriteria(CV_TERMCRIT_ITER | CV_TERMCRIT_EPS, 20, 0.03));
 	cvtColor(src1, gray1, CV_BGR2GRAY);
 	goodFeaturesToTrack(gray1, corners1, corner_count, 0.01, 5, Mat(), 3, false, 0.04);
 	cornerSubPix(gray1, corners1, Size(10, 10), Size(-1, -1), TermCriteria(CV_TERMCRIT_ITER | CV_TERMCRIT_EPS, 20, 0.03));
-	vector<Point2f>::iterator it;
 
+	vector<Point2f>::iterator it;
 	for (it = corners0.begin(); it != corners0.end(); it++)
 	{
-	circle(mask, *it, 1, Scalar(255, 255, 255), 1, 8, 0);
+		circle(trait, *it, 1, Scalar(255, 0, 255), 1, 8, 0);
 	}
 	for (it = corners1.begin(); it != corners1.end(); it++)
 	{
-	circle(mask, *it, 1, Scalar(255, 255, 255), 1, 8, 0);
-	}*/
+		circle(trait, *it, 1, Scalar(255, 0, 255), 1, 8, 0);
+	}
+	return trait;
 }

@@ -6,206 +6,322 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1618</width>
-    <height>778</height>
+    <width>2042</width>
+    <height>1082</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>action_recognition</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="start">
-    <property name="geometry">
-     <rect>
-      <x>1190</x>
-      <y>530</y>
-      <width>150</width>
-      <height>46</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Start</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>20</y>
-      <width>1482</width>
-      <height>482</height>
+      <x>42</x>
+      <y>30</y>
+      <width>1954</width>
+      <height>941</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetMinimumSize</enum>
-     </property>
+    <layout class="QVBoxLayout" name="verticalLayout_5">
      <item>
-      <widget class="QLabel" name="srcImg">
-       <property name="minimumSize">
-        <size>
-         <width>640</width>
-         <height>480</height>
-        </size>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <property name="spacing">
+        <number>12</number>
        </property>
-       <property name="text">
-        <string>srcImg</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="font">
-        <font>
-         <pointsize>15</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>svm 1 :</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPlainTextEdit" name="svm1Text">
-       <property name="minimumSize">
-        <size>
-         <width>50</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>16777215</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="font">
-        <font>
-         <pointsize>15</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>svm 2 :</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPlainTextEdit" name="svm2Text">
-       <property name="minimumSize">
-        <size>
-         <width>300</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>300</width>
-         <height>16777215</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>530</y>
-      <width>976</width>
-      <height>125</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLabel" name="rgbLabel">
-         <property name="minimumSize">
-          <size>
-           <width>60</width>
-           <height>0</height>
-          </size>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetMinimumSize</enum>
          </property>
-         <property name="text">
-          <string> 源 文件位置 : </string>
-         </property>
-        </widget>
+         <item>
+          <widget class="QLabel" name="srcImg">
+           <property name="minimumSize">
+            <size>
+             <width>960</width>
+             <height>720</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>获取图像</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QLineEdit" name="rgbPath">
-         <property name="minimumSize">
-          <size>
-           <width>640</width>
-           <height>0</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="rgbToolButton">
-         <property name="text">
-          <string>...</string>
-         </property>
-        </widget>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <property name="spacing">
+            <number>12</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="bgImg">
+             <property name="minimumSize">
+              <size>
+               <width>480</width>
+               <height>360</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>480</width>
+               <height>360</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>前景图</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lightImg">
+             <property name="text">
+              <string>稀疏光流特征</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <property name="spacing">
+            <number>12</number>
+           </property>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetMinimumSize</enum>
+           </property>
+           <item>
+            <widget class="QLabel" name="coreImg">
+             <property name="minimumSize">
+              <size>
+               <width>480</width>
+               <height>360</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>重心</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="whImg">
+             <property name="minimumSize">
+              <size>
+               <width>480</width>
+               <height>360</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>480</width>
+               <height>360</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>宽高比</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout2">
-       <item>
-        <widget class="QLabel" name="grayLabel">
-         <property name="minimumSize">
-          <size>
-           <width>60</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>灰度文件位置 : </string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="grayPath"/>
-       </item>
-       <item>
-        <widget class="QToolButton" name="grayToolButton">
-         <property name="text">
-          <string>...</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>48</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout3">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
-        <widget class="QLabel" name="dstLabel">
-         <property name="minimumSize">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
           <size>
-           <width>60</width>
-           <height>0</height>
+           <width>40</width>
+           <height>20</height>
           </size>
          </property>
-         <property name="text">
-          <string>保存文件位置 : </string>
-         </property>
-        </widget>
+        </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="dstPath"/>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLabel" name="rgbLabel">
+             <property name="minimumSize">
+              <size>
+               <width>240</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string> 源 文件位置 : </string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="rgbPath">
+             <property name="minimumSize">
+              <size>
+               <width>640</width>
+               <height>0</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="rgbToolButton">
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout2">
+           <item>
+            <widget class="QLabel" name="grayLabel">
+             <property name="minimumSize">
+              <size>
+               <width>240</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>灰度文件位置 : </string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="grayPath"/>
+           </item>
+           <item>
+            <widget class="QToolButton" name="grayToolButton">
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout3">
+           <item>
+            <widget class="QLabel" name="dstLabel">
+             <property name="minimumSize">
+              <size>
+               <width>240</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>保存文件位置 : </string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="dstPath"/>
+           </item>
+           <item>
+            <widget class="QToolButton" name="dstToolButton">
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QToolButton" name="dstToolButton">
-         <property name="text">
-          <string>...</string>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QRadioButton" name="radioButton">
+           <property name="text">
+            <string>svm模型</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radioButton_2">
+           <property name="text">
+            <string>隐马尔科夫模型</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>状态监控</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="status">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QPushButton" name="start">
+           <property name="text">
+            <string>Start</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="start_3">
+           <property name="text">
+            <string>Stop</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
-        </widget>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </item>
@@ -217,7 +333,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1618</width>
+     <width>2042</width>
      <height>37</height>
     </rect>
    </property>
@@ -244,8 +360,8 @@
    <slot>start()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1190</x>
-     <y>634</y>
+     <x>1343</x>
+     <y>897</y>
     </hint>
     <hint type="destinationlabel">
      <x>1319</x>
@@ -260,8 +376,8 @@
    <slot>getRgbPath()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1027</x>
-     <y>607</y>
+     <x>954</x>
+     <y>889</y>
     </hint>
     <hint type="destinationlabel">
      <x>1119</x>
@@ -269,9 +385,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>start_3</sender>
+   <signal>clicked()</signal>
+   <receiver>action_recognitionClass</receiver>
+   <slot>stop()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1253</x>
+     <y>981</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1365</x>
+     <y>1011</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>start()</slot>
   <slot>getRgbPath()</slot>
+  <slot>stop()</slot>
  </slots>
 </ui>

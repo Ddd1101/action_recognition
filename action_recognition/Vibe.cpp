@@ -127,7 +127,7 @@ void ViBe_BGS::testAndUpdate(const Mat _image)
 				m_mask.at<uchar>(i, j) = 255;
 
 				//如果某个像素点连续N次被检测为前景，则认为一块静止区域被误判为运动，将其更新为背景点
-				if (m_foregroundMatchCount.at<uchar>(i, j) > 50)
+				if (m_foregroundMatchCount.at<uchar>(i, j) > 10)
 				{
 					int random = rng.uniform(0, SUBSAMPLE_FACTOR);
 					if (random == 0)
