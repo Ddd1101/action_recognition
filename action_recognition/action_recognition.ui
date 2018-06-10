@@ -286,7 +286,7 @@
             </size>
            </property>
            <property name="text">
-            <string/>
+            <string>        正常</string>
            </property>
           </widget>
          </item>

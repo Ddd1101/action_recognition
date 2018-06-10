@@ -331,7 +331,7 @@ public:
         radioButton->setText(QApplication::translate("action_recognitionClass", "svm\346\250\241\345\236\213", Q_NULLPTR));
         radioButton_2->setText(QApplication::translate("action_recognitionClass", "\351\232\220\351\251\254\345\260\224\347\247\221\345\244\253\346\250\241\345\236\213", Q_NULLPTR));
         label_2->setText(QApplication::translate("action_recognitionClass", "\347\212\266\346\200\201\347\233\221\346\216\247", Q_NULLPTR));
-        status->setText(QApplication::translate("action_recognitionClass", "        \350\255\246\345\221\212", Q_NULLPTR));
+        status->setText(QApplication::translate("action_recognitionClass", "        \346\255\243\345\270\270", Q_NULLPTR));
         start->setText(QApplication::translate("action_recognitionClass", "Start", Q_NULLPTR));
         start_3->setText(QApplication::translate("action_recognitionClass", "Stop", Q_NULLPTR));
     } // retranslateUi

@@ -58,6 +58,10 @@ action_recognition::action_recognition(QWidget *parent)
 
 	z_m = new ZernikeMoment();
 
+	while (svm2W.empty()!=1) {
+		svm2W.pop();
+	}
+
 	//ui.srcPathText->setText("C:\\dataset\\dataset\\pos\\1");
 
 	//Ö¡²¥·Å
@@ -102,6 +106,12 @@ void action_recognition::start() {
 	while (coreTrait.empty() != 1) {
 		coreTrait.pop();
 	}
+
+	svm2Show = QString::fromLocal8Bit("        Õý³£");
+	ui.status->setText(svm2Show);
+	while (svm2W.empty()!=1) {
+		svm2W.pop();
+	}
 }
 
 void action_recognition::stop() {
@@ -144,6 +154,8 @@ void action_recognition::frameProcess() {
 			morphologyEx(mask, mask, MORPH_OPEN, elem7);//¿ªÔËËã=¸¯Ê´+ÅòÕÍ
 			morphologyEx(mask, mask, MORPH_CLOSE, elem7);//±ÕÔËËã=ÅòÕÍ+¸¯Ê´
 			medianBlur(mask, mask, 3);//ÖÐÖµÂË²¨
+
+			
 
 			bound = filterBg_boundRect(mask);
 
@@ -205,7 +217,40 @@ void action_recognition::frameProcess() {
 
 				Mat test(1, 10, CV_32F, z_modes);
 				svm2Res = svm2->predict(test);
-				//cout << "svm2  : " << svm2Res;
+				svm2Res *= (-1);
+
+				if (svm2W.size()<15) {
+					if (svm2Res>15) {
+						svm2W.push(1);
+					}
+					else {
+						svm2W.push(0);
+					}
+				}
+				else {
+					svm2W.pop();
+					if (svm2Res>15) {
+						svm2W.push(1);
+					}
+					else {
+						svm2W.push(0);
+					}
+				}
+				if (svm2W.size()>=15) {
+					int sum = 0;
+					for (int i = 0; i < svm2W.size();i++) {
+						int tmp = 0;
+						tmp = svm2W.front();
+						svm2W.pop();
+						svm2W.push(tmp);
+						sum += tmp;
+					}
+					if (sum>13) {
+						svm2Show = QString::fromLocal8Bit("        ¾¯¸æ");
+						ui.status->setText(svm2Show);
+					}
+				}
+				cout << "svm2  : " << svm2Res << endl;
 			}
 			//cout << endl;
 		}

@@ -139,6 +139,7 @@
     <QtRcc Include="action_recognition.qrc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CvHMM.h" />
     <ClInclude Include="util.h" />
     <ClInclude Include="Vibe.h" />
     <ClInclude Include="ZernikeMoment.h" />

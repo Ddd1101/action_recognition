@@ -83,6 +83,7 @@ private:
 	//svm检测
 	float z_modes[10];
 	ZernikeMoment *z_m;
+	QString svm2Show;
 
 	//帧播放
 	QTimer *time_clock;
@@ -92,6 +93,8 @@ private:
 	
 	//重心特征
 	queue<float> coreTrait;
+
+	queue<bool> svm2W;
 
 
 private slots:              //声明信号函数  
