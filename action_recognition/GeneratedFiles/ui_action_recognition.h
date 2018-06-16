@@ -24,7 +24,6 @@
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
-#include <QtWidgets/QToolButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -48,23 +47,17 @@ public:
     QLabel *whImg;
     QSpacerItem *verticalSpacer;
     QHBoxLayout *horizontalLayout_4;
-    QSpacerItem *horizontalSpacer;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
-    QLabel *rgbLabel;
-    QLineEdit *rgbPath;
-    QToolButton *rgbToolButton;
-    QHBoxLayout *horizontalLayout2;
-    QLabel *grayLabel;
-    QLineEdit *grayPath;
-    QToolButton *grayToolButton;
-    QHBoxLayout *horizontalLayout3;
-    QLabel *dstLabel;
-    QLineEdit *dstPath;
-    QToolButton *dstToolButton;
     QVBoxLayout *verticalLayout_3;
-    QRadioButton *radioButton;
-    QRadioButton *radioButton_2;
+    QRadioButton *posRadio;
+    QRadioButton *negRadio;
+    QSpacerItem *horizontalSpacer_3;
+    QLabel *rgbLabel;
+    QLineEdit *pathNum;
+    QHBoxLayout *horizontalLayout_9;
+    QLabel *label_3;
+    QLineEdit *frameRate;
     QHBoxLayout *horizontalLayout_7;
     QLabel *label_2;
     QLineEdit *status;
@@ -72,6 +65,12 @@ public:
     QPushButton *start;
     QPushButton *start_3;
     QSpacerItem *horizontalSpacer_2;
+    QWidget *layoutWidget1;
+    QHBoxLayout *horizontalLayout_8;
+    QLabel *label;
+    QVBoxLayout *verticalLayout_6;
+    QRadioButton *isTrait;
+    QRadioButton *noTrait;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -80,7 +79,7 @@ public:
     {
         if (action_recognitionClass->objectName().isEmpty())
             action_recognitionClass->setObjectName(QStringLiteral("action_recognitionClass"));
-        action_recognitionClass->resize(2042, 1082);
+        action_recognitionClass->resize(2042, 1210);
         centralWidget = new QWidget(action_recognitionClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
@@ -161,98 +160,66 @@ public:
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_4->addItem(horizontalSpacer);
-
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, -1, -1, -1);
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        posRadio = new QRadioButton(layoutWidget);
+        posRadio->setObjectName(QStringLiteral("posRadio"));
+        posRadio->setChecked(true);
+
+        verticalLayout_3->addWidget(posRadio);
+
+        negRadio = new QRadioButton(layoutWidget);
+        negRadio->setObjectName(QStringLiteral("negRadio"));
+
+        verticalLayout_3->addWidget(negRadio);
+
+
+        horizontalLayout->addLayout(verticalLayout_3);
+
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer_3);
+
         rgbLabel = new QLabel(layoutWidget);
         rgbLabel->setObjectName(QStringLiteral("rgbLabel"));
         rgbLabel->setMinimumSize(QSize(240, 0));
 
         horizontalLayout->addWidget(rgbLabel);
 
-        rgbPath = new QLineEdit(layoutWidget);
-        rgbPath->setObjectName(QStringLiteral("rgbPath"));
-        rgbPath->setMinimumSize(QSize(640, 0));
+        pathNum = new QLineEdit(layoutWidget);
+        pathNum->setObjectName(QStringLiteral("pathNum"));
 
-        horizontalLayout->addWidget(rgbPath);
-
-        rgbToolButton = new QToolButton(layoutWidget);
-        rgbToolButton->setObjectName(QStringLiteral("rgbToolButton"));
-
-        horizontalLayout->addWidget(rgbToolButton);
+        horizontalLayout->addWidget(pathNum);
 
 
         verticalLayout->addLayout(horizontalLayout);
 
-        horizontalLayout2 = new QHBoxLayout();
-        horizontalLayout2->setSpacing(6);
-        horizontalLayout2->setObjectName(QStringLiteral("horizontalLayout2"));
-        grayLabel = new QLabel(layoutWidget);
-        grayLabel->setObjectName(QStringLiteral("grayLabel"));
-        grayLabel->setMinimumSize(QSize(240, 0));
-
-        horizontalLayout2->addWidget(grayLabel);
-
-        grayPath = new QLineEdit(layoutWidget);
-        grayPath->setObjectName(QStringLiteral("grayPath"));
-
-        horizontalLayout2->addWidget(grayPath);
-
-        grayToolButton = new QToolButton(layoutWidget);
-        grayToolButton->setObjectName(QStringLiteral("grayToolButton"));
-
-        horizontalLayout2->addWidget(grayToolButton);
-
-
-        verticalLayout->addLayout(horizontalLayout2);
-
-        horizontalLayout3 = new QHBoxLayout();
-        horizontalLayout3->setSpacing(6);
-        horizontalLayout3->setObjectName(QStringLiteral("horizontalLayout3"));
-        dstLabel = new QLabel(layoutWidget);
-        dstLabel->setObjectName(QStringLiteral("dstLabel"));
-        dstLabel->setMinimumSize(QSize(240, 0));
-
-        horizontalLayout3->addWidget(dstLabel);
-
-        dstPath = new QLineEdit(layoutWidget);
-        dstPath->setObjectName(QStringLiteral("dstPath"));
-
-        horizontalLayout3->addWidget(dstPath);
-
-        dstToolButton = new QToolButton(layoutWidget);
-        dstToolButton->setObjectName(QStringLiteral("dstToolButton"));
-
-        horizontalLayout3->addWidget(dstToolButton);
-
-
-        verticalLayout->addLayout(horizontalLayout3);
-
 
         horizontalLayout_4->addLayout(verticalLayout);
 
-        verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        radioButton = new QRadioButton(layoutWidget);
-        radioButton->setObjectName(QStringLiteral("radioButton"));
+        horizontalLayout_9 = new QHBoxLayout();
+        horizontalLayout_9->setSpacing(6);
+        horizontalLayout_9->setObjectName(QStringLiteral("horizontalLayout_9"));
+        label_3 = new QLabel(layoutWidget);
+        label_3->setObjectName(QStringLiteral("label_3"));
 
-        verticalLayout_3->addWidget(radioButton);
+        horizontalLayout_9->addWidget(label_3);
 
-        radioButton_2 = new QRadioButton(layoutWidget);
-        radioButton_2->setObjectName(QStringLiteral("radioButton_2"));
+        frameRate = new QLineEdit(layoutWidget);
+        frameRate->setObjectName(QStringLiteral("frameRate"));
 
-        verticalLayout_3->addWidget(radioButton_2);
+        horizontalLayout_9->addWidget(frameRate);
 
 
-        horizontalLayout_4->addLayout(verticalLayout_3);
+        horizontalLayout_4->addLayout(horizontalLayout_9);
 
         horizontalLayout_7 = new QHBoxLayout();
         horizontalLayout_7->setSpacing(6);
@@ -294,6 +261,37 @@ public:
 
         verticalLayout_5->addLayout(horizontalLayout_4);
 
+        layoutWidget1 = new QWidget(centralWidget);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(40, 990, 178, 106));
+        horizontalLayout_8 = new QHBoxLayout(layoutWidget1);
+        horizontalLayout_8->setSpacing(6);
+        horizontalLayout_8->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_8->setObjectName(QStringLiteral("horizontalLayout_8"));
+        horizontalLayout_8->setContentsMargins(0, 0, 0, 0);
+        label = new QLabel(layoutWidget1);
+        label->setObjectName(QStringLiteral("label"));
+
+        horizontalLayout_8->addWidget(label);
+
+        verticalLayout_6 = new QVBoxLayout();
+        verticalLayout_6->setSpacing(6);
+        verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
+        isTrait = new QRadioButton(layoutWidget1);
+        isTrait->setObjectName(QStringLiteral("isTrait"));
+        isTrait->setChecked(false);
+
+        verticalLayout_6->addWidget(isTrait);
+
+        noTrait = new QRadioButton(layoutWidget1);
+        noTrait->setObjectName(QStringLiteral("noTrait"));
+        noTrait->setChecked(true);
+
+        verticalLayout_6->addWidget(noTrait);
+
+
+        horizontalLayout_8->addLayout(verticalLayout_6);
+
         action_recognitionClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(action_recognitionClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -308,7 +306,6 @@ public:
 
         retranslateUi(action_recognitionClass);
         QObject::connect(start, SIGNAL(clicked()), action_recognitionClass, SLOT(start()));
-        QObject::connect(rgbToolButton, SIGNAL(clicked()), action_recognitionClass, SLOT(getRgbPath()));
         QObject::connect(start_3, SIGNAL(clicked()), action_recognitionClass, SLOT(stop()));
 
         QMetaObject::connectSlotsByName(action_recognitionClass);
@@ -322,18 +319,19 @@ public:
         lightImg->setText(QApplication::translate("action_recognitionClass", "\347\250\200\347\226\217\345\205\211\346\265\201\347\211\271\345\276\201", Q_NULLPTR));
         coreImg->setText(QApplication::translate("action_recognitionClass", "\351\207\215\345\277\203", Q_NULLPTR));
         whImg->setText(QApplication::translate("action_recognitionClass", "\345\256\275\351\253\230\346\257\224", Q_NULLPTR));
-        rgbLabel->setText(QApplication::translate("action_recognitionClass", " \346\272\220 \346\226\207\344\273\266\344\275\215\347\275\256 : ", Q_NULLPTR));
-        rgbToolButton->setText(QApplication::translate("action_recognitionClass", "...", Q_NULLPTR));
-        grayLabel->setText(QApplication::translate("action_recognitionClass", "\347\201\260\345\272\246\346\226\207\344\273\266\344\275\215\347\275\256 : ", Q_NULLPTR));
-        grayToolButton->setText(QApplication::translate("action_recognitionClass", "...", Q_NULLPTR));
-        dstLabel->setText(QApplication::translate("action_recognitionClass", "\344\277\235\345\255\230\346\226\207\344\273\266\344\275\215\347\275\256 : ", Q_NULLPTR));
-        dstToolButton->setText(QApplication::translate("action_recognitionClass", "...", Q_NULLPTR));
-        radioButton->setText(QApplication::translate("action_recognitionClass", "svm\346\250\241\345\236\213", Q_NULLPTR));
-        radioButton_2->setText(QApplication::translate("action_recognitionClass", "\351\232\220\351\251\254\345\260\224\347\247\221\345\244\253\346\250\241\345\236\213", Q_NULLPTR));
+        posRadio->setText(QApplication::translate("action_recognitionClass", "\346\221\224\345\200\222\346\225\260\346\215\256", Q_NULLPTR));
+        negRadio->setText(QApplication::translate("action_recognitionClass", "\346\227\245\345\270\270\346\225\260\346\215\256", Q_NULLPTR));
+        rgbLabel->setText(QApplication::translate("action_recognitionClass", " \346\272\220\346\226\207\344\273\266\345\272\217\345\217\267 : ", Q_NULLPTR));
+        pathNum->setText(QApplication::translate("action_recognitionClass", "1", Q_NULLPTR));
+        label_3->setText(QApplication::translate("action_recognitionClass", "\345\270\247\347\216\207", Q_NULLPTR));
+        frameRate->setText(QApplication::translate("action_recognitionClass", "0", Q_NULLPTR));
         label_2->setText(QApplication::translate("action_recognitionClass", "\347\212\266\346\200\201\347\233\221\346\216\247", Q_NULLPTR));
         status->setText(QApplication::translate("action_recognitionClass", "        \346\255\243\345\270\270", Q_NULLPTR));
         start->setText(QApplication::translate("action_recognitionClass", "Start", Q_NULLPTR));
         start_3->setText(QApplication::translate("action_recognitionClass", "Stop", Q_NULLPTR));
+        label->setText(QApplication::translate("action_recognitionClass", "\346\230\276\347\244\272\347\211\271\345\276\201", Q_NULLPTR));
+        isTrait->setText(QApplication::translate("action_recognitionClass", "\346\230\257", Q_NULLPTR));
+        noTrait->setText(QApplication::translate("action_recognitionClass", "\345\220\246", Q_NULLPTR));
     } // retranslateUi
 
 };

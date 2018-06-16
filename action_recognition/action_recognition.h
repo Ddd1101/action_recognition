@@ -53,11 +53,13 @@ private:
 	Mat elem3 = getStructuringElement(MORPH_RECT, Size(3, 3));
 	Mat elem5 = getStructuringElement(MORPH_RECT, Size(5, 5));
 	Mat elem7 = getStructuringElement(MORPH_RECT, Size(7, 7));
+	Mat elem9 = getStructuringElement(MORPH_RECT, Size(9, 9));
 
-	QString rgbPath;//源数据路径
-	QString grayPath;//灰度图路径
+    string rgbPath;//源数据路径
+	string grayPath;//灰度图路径
 	string stdRgbPath;
 	string stdGrayPath;
+	QString pathNum;
 
 	VideoCapture capture;
 	vector< String > rgbFiles;
@@ -96,6 +98,9 @@ private:
 
 	queue<bool> svm2W;
 
+	//测试帧率
+	double startTime;
+	double curTime;
 
 private slots:              //声明信号函数  
 	void frameProcess();

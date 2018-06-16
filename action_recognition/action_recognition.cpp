@@ -58,7 +58,7 @@ action_recognition::action_recognition(QWidget *parent)
 
 	z_m = new ZernikeMoment();
 
-	while (svm2W.empty()!=1) {
+	while (svm2W.empty() != 1) {
 		svm2W.pop();
 	}
 
@@ -75,47 +75,83 @@ action_recognition::action_recognition(QWidget *parent)
 	ui.srcImg->show();
 
 	//地址默认值
-	QString pathTmp = "C:\\dataset\\src\\pos\\1";
-	ui.rgbPath->setText(pathTmp);
-	pathTmp = "C:\\dataset\\dataset\\pos\\1";
-	ui.grayPath->setText(pathTmp);
+	pathNum = "1";
+	rgbPath = "C:\\dataset\\test\\rgb\\pos\\";
+	grayPath = "C:\\dataset\\test\\gray\\pos\\";
 
 	//ui.svm1Text->setReadOnly(true);
 	//ui.svm2Text->setReadOnly(true);
 
 	//特征显示
-	lightTrait = Mat(480, 640, CV_8UC1, Scalar(0));
-	whTraitImg = Mat(360, 480, CV_8UC1, Scalar(0));
-
+	if (ui.isTrait->isChecked()) {
+		lightTrait = Mat(480, 640, CV_8UC1, Scalar(0));
+		whTraitImg = Mat(360, 480, CV_8UC1, Scalar(0));
+	}
 }
 
 void action_recognition::start() {
+	startTime = static_cast<double>(getTickCount());
+
 	time_clock->start();
 	imgCount = 0;
-	stdRgbPath = ui.rgbPath->text().toStdString();
-	stdGrayPath = ui.grayPath->text().toStdString();
+	if (ui.posRadio->isChecked()) {
+		rgbPath = "C:\\dataset\\test\\rgb\\pos\\";
+		grayPath = "C:\\dataset\\test\\gray\\pos\\";
+		/*t1p = "C:\\dataset\\test\\t1\\pos\\";
+		t2p = "C:\\dataset\\test\\t2\\pos\\";
+		t3p = "C:\\dataset\\test\\t3\\pos\\";
+		t4p = "C:\\dataset\\test\\t4\\pos\\";*/
+	}
+	else {
+		rgbPath = "C:\\dataset\\test\\rgb\\neg\\";
+		grayPath = "C:\\dataset\\test\\gray\\neg\\";
+		/*t1p = "C:\\dataset\\test\\t1\\neg\\";
+		t2p = "C:\\dataset\\test\\t2\\neg\\";
+		t3p = "C:\\dataset\\test\\t3\\neg\\";
+		t4p = "C:\\dataset\\test\\t4\\neg\\";*/
+	}
+	stdRgbPath = rgbPath += (ui.pathNum->text().toStdString());
+	stdGrayPath = grayPath += (ui.pathNum->text().toStdString());
+	/*t1p += (ui.pathNum->text().toStdString());
+	t2p += (ui.pathNum->text().toStdString());
+	t3p += (ui.pathNum->text().toStdString());
+	t4p += (ui.pathNum->text().toStdString());
+	t1p += "\\";
+	t2p += "\\";
+	t3p += "\\";
+	t4p += "\\";*/
 
-	lightTrait = Mat(480, 640, CV_8UC1, Scalar(0));
+	//cout << stdRgbPath << endl;
 
-	whTraitImg = Mat(360, 480, CV_8UC1, Scalar(0));
-	while (whTrait.empty() != 1) {
-		whTrait.pop();
+	if (ui.isTrait->isChecked()) {
+		lightTrait = Mat(480, 640, CV_8UC1, Scalar(0));
+
+		whTraitImg = Mat(360, 480, CV_8UC1, Scalar(0));
+		while (whTrait.empty() != 1) {
+			whTrait.pop();
+		}
+		coreTraitImg = Mat(360, 480, CV_8UC1, Scalar(0));
 	}
 
-	coreTraitImg = Mat(360, 480, CV_8UC1, Scalar(0));
+	
 	while (coreTrait.empty() != 1) {
 		coreTrait.pop();
 	}
 
 	svm2Show = QString::fromLocal8Bit("        正常");
 	ui.status->setText(svm2Show);
-	while (svm2W.empty()!=1) {
+	while (svm2W.empty() != 1) {
 		svm2W.pop();
 	}
 }
 
 void action_recognition::stop() {
 	time_clock->stop();
+	while(!svm2W.empty()) {
+		svm2W.pop();
+	}
+	svm2Show = QString::fromLocal8Bit("        正常");
+	ui.status->setText(svm2Show);
 }
 
 void action_recognition::frameProcess() {
@@ -133,8 +169,11 @@ void action_recognition::frameProcess() {
 	float svm2Res = 0;
 	if (imgCount < rgbFiles.size() && imgCount < grayFiles.size()) {
 		image = cv::imread(rgbFiles[imgCount]);
-		whTraitImg = Mat(360, 480, CV_8UC1, Scalar(0));
-		coreTraitImg = Mat(360, 480, CV_8UC1, Scalar(0));
+		if (ui.isTrait->isChecked()) {
+			whTraitImg = Mat(360, 480, CV_8UC1, Scalar(0));
+			coreTraitImg = Mat(360, 480, CV_8UC1, Scalar(0));
+		}
+		
 		//srcGray= cv::imread(grayFiles[imgCount]);
 		Mat tmp;
 		cvtColor(image, tmp, COLOR_RGB2GRAY);
@@ -150,12 +189,14 @@ void action_recognition::frameProcess() {
 			//threshold(src, src, 0,255, THRESH_BINARY);//最大类间差
 			Vibe_Bgs.testAndUpdate(tmp);
 			mask = Vibe_Bgs.getMask();
-			lightTrait = getLightTrait(rgbFiles[imgCount - 1], rgbFiles[imgCount]);//稀疏光流特征
+			if (ui.isTrait->isChecked()) {
+				lightTrait = getLightTrait(rgbFiles[imgCount - 1], rgbFiles[imgCount]);//稀疏光流特征
+			}
 			morphologyEx(mask, mask, MORPH_OPEN, elem7);//开运算=腐蚀+膨胀
-			morphologyEx(mask, mask, MORPH_CLOSE, elem7);//闭运算=膨胀+腐蚀
+			morphologyEx(mask, mask, MORPH_CLOSE, elem9);//闭运算=膨胀+腐蚀
 			medianBlur(mask, mask, 3);//中值滤波
 
-			
+
 
 			bound = filterBg_boundRect(mask);
 
@@ -219,8 +260,8 @@ void action_recognition::frameProcess() {
 				svm2Res = svm2->predict(test);
 				svm2Res *= (-1);
 
-				if (svm2W.size()<15) {
-					if (svm2Res>15) {
+				if (svm2W.size() < 15) {
+					if (svm2Res > 15) {
 						svm2W.push(1);
 					}
 					else {
@@ -229,23 +270,23 @@ void action_recognition::frameProcess() {
 				}
 				else {
 					svm2W.pop();
-					if (svm2Res>15) {
+					if (svm2Res > 15) {
 						svm2W.push(1);
 					}
 					else {
 						svm2W.push(0);
 					}
 				}
-				if (svm2W.size()>=15) {
+				if (svm2W.size() >= 15) {
 					int sum = 0;
-					for (int i = 0; i < svm2W.size();i++) {
+					for (int i = 0; i < svm2W.size(); i++) {
 						int tmp = 0;
 						tmp = svm2W.front();
 						svm2W.pop();
 						svm2W.push(tmp);
 						sum += tmp;
 					}
-					if (sum>13) {
+					if (sum > 13) {
 						svm2Show = QString::fromLocal8Bit("        警告");
 						ui.status->setText(svm2Show);
 					}
@@ -273,7 +314,10 @@ void action_recognition::frameProcess() {
 				whTrait.pop();
 				whTrait.push(tmp);
 				pointInterest.y = 240 - tmp * 80;//特征点在图像中纵坐标
-				cv::circle(whTraitImg, pointInterest, 4, cv::Scalar(255, 255, 255));//在图像中画出特征点，2是圆的半径
+				if (ui.isTrait->isChecked()) {
+					cv::circle(whTraitImg, pointInterest, 4, cv::Scalar(255, 255, 255));//在图像中画出特征点，2是圆的半径
+				}
+				
 			}
 		}
 		if (coreTrait.size() > 0) {
@@ -284,28 +328,38 @@ void action_recognition::frameProcess() {
 				coreTrait.pop();
 				coreTrait.push(tmp);
 				pointInterest.y = 240 - tmp * 80;//特征点在图像中纵坐标
-				cv::circle(coreTraitImg, pointInterest, 4, cv::Scalar(255, 255, 255));//在图像中画出特征点，2是圆的半径
+				if (ui.isTrait->isChecked()) {
+					cv::circle(coreTraitImg, pointInterest, 4, cv::Scalar(255, 255, 255));//在图像中画出特征点，2是圆的半径
+				}
+				
 			}
 		}
-		if (whTraitImg.channels() == 1) {
+
+		if (ui.isTrait->isChecked()) {
+			if (whTraitImg.channels() == 1) {
 			cv::cvtColor(whTraitImg, whTraitImg, CV_GRAY2BGRA);
-		}
-		else {
+			}
+			else {
 			cv::cvtColor(whTraitImg, whTraitImg, CV_RGB2RGBA);
-		}
-		showWHTFrame();
-		if (coreTraitImg.channels() == 1) {
+			}
+			
+			if (coreTraitImg.channels() == 1) {
 			cv::cvtColor(coreTraitImg, coreTraitImg, CV_GRAY2BGRA);
-		}
-		else {
+			}
+			else {
 			cv::cvtColor(coreTraitImg, coreTraitImg, CV_RGB2RGBA);
+			}
+			
+			cv::resize(lightTrait, lightTrait, Size(lightTrait.cols * 0.75, lightTrait.rows * 0.75), 0, 0, INTER_LINEAR);
+			cv::cvtColor(lightTrait, lightTrait, CV_GRAY2BGRA);
+			
 		}
-		showCTFrame();
+		
 		cv::resize(image, image, Size(image.cols * 1.5, image.rows * 1.5), 0, 0, INTER_LINEAR);
 		cv::cvtColor(image, image, CV_RGB2RGBA);
 		showSrcFrame();
-		cv::resize(lightTrait, lightTrait, Size(lightTrait.cols * 0.75, lightTrait.rows * 0.75), 0, 0, INTER_LINEAR);
-		cv::cvtColor(lightTrait, lightTrait, CV_GRAY2BGRA);
+		showWHTFrame();
+		showCTFrame();
 		showLTFrame();
 	}
 	//auto workCursor1 = ui.svm1Text->textCursor();
@@ -325,15 +379,20 @@ void action_recognition::frameProcess() {
 	if (imgCount == (rgbFiles.size() - 1) || imgCount == (grayFiles.size() - 1)) {
 		time_clock->stop();
 	}
+	curTime = ((double)getTickCount() - startTime) / getTickFrequency();
+	double frameRate = imgCount / curTime;
+	QString frameRateShow;
+	frameRateShow.setNum(frameRate, 'g', 3);
+	ui.frameRate->setText(frameRateShow);
 
 	imgCount++;
 }
 
 void action_recognition::getRgbPath() {
-	rgbPath = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Save path"), QDir::currentPath()));
+	/*rgbPath = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Save path"), QDir::currentPath()));
 	if (!rgbPath.isEmpty()) {
 		ui.rgbPath->setText(rgbPath);
-	}
+	}*/
 }
 
 void action_recognition::showSrcFrame() {
@@ -344,29 +403,38 @@ void action_recognition::showSrcFrame() {
 }
 
 void action_recognition::showBgFrame() {
-	QImage img = QImage((const unsigned char*)(mask.data),
-		mask.cols, mask.rows, QImage::Format_RGB32);
-	ui.bgImg->setPixmap(QPixmap::fromImage(img));
-	ui.bgImg->show();
+	if (ui.isTrait->isChecked()) {
+		QImage img = QImage((const unsigned char*)(mask.data),
+			mask.cols, mask.rows, QImage::Format_RGB32);
+		ui.bgImg->setPixmap(QPixmap::fromImage(img));
+		ui.bgImg->show();
+	}
 }
 
 void action_recognition::showLTFrame() {
-	QImage img = QImage((const unsigned char*)(lightTrait.data),
-		lightTrait.cols, lightTrait.rows, QImage::Format_RGB32);
-	ui.lightImg->setPixmap(QPixmap::fromImage(img));
-	ui.lightImg->show();
+	if (ui.isTrait->isChecked()) {
+		QImage img = QImage((const unsigned char*)(lightTrait.data),
+			lightTrait.cols, lightTrait.rows, QImage::Format_RGB32);
+		ui.lightImg->setPixmap(QPixmap::fromImage(img));
+		ui.lightImg->show();
+	}
 }
 
 void action_recognition::showWHTFrame() {
-	QImage img = QImage((const unsigned char*)(whTraitImg.data),
-		whTraitImg.cols, whTraitImg.rows, QImage::Format_RGB32);
-	ui.whImg->setPixmap(QPixmap::fromImage(img));
-	ui.whImg->show();
+	if (ui.isTrait->isChecked()) {
+		QImage img = QImage((const unsigned char*)(whTraitImg.data),
+			whTraitImg.cols, whTraitImg.rows, QImage::Format_RGB32);
+		ui.whImg->setPixmap(QPixmap::fromImage(img));
+		ui.whImg->show();
+	}
 }
 
 void action_recognition::showCTFrame() {
-	QImage img = QImage((const unsigned char*)(coreTraitImg.data),
-		coreTraitImg.cols, coreTraitImg.rows, QImage::Format_RGB32);
-	ui.coreImg->setPixmap(QPixmap::fromImage(img));
-	ui.coreImg->show();
+	if (ui.isTrait->isChecked()) {
+		QImage img = QImage((const unsigned char*)(coreTraitImg.data),
+			coreTraitImg.cols, coreTraitImg.rows, QImage::Format_RGB32);
+		ui.coreImg->setPixmap(QPixmap::fromImage(img));
+		ui.coreImg->show();
+	}
 }
+
