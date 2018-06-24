@@ -360,6 +360,12 @@ void action_recognition::frameProcess() {
 		showSrcFrame();
 		showWHTFrame();
 		showCTFrame();
+		if (ui.isTrait->isChecked() && !coreTraitImg.empty()) {
+			string corePath = "C:\\dataset\\test\\t3\\tmp\\";
+			corePath += to_string(imgCount);
+			corePath += ".jpg";
+			imwrite(corePath, coreTraitImg);
+		}
 		showLTFrame();
 	}
 	//auto workCursor1 = ui.svm1Text->textCursor();

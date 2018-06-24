@@ -63,7 +63,7 @@ Wicket filterBg_boundRect(Mat &mask) {
 	Wicket result;
 	Mat contours_src = mask.clone();
 	findContours(contours_src, contours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);//查找轮廓
-	sort(contours.begin(), contours.end(), ContoursSortFun);
+	sort(contours.begin(), contours.end(), ContoursSortFun);//进行轮廓排序，第一个即为目标轮廓
 	Mat toMask(mask.size(), CV_8UC3, Scalar(0, 0, 0));//创建一个全黑的图片
 	vector<vector<Point>> ::iterator it;
 	if (contours.size() > 0 && contours[0].size() > 250) {
@@ -296,11 +296,11 @@ Mat getLightTrait(string p1, string p2) {//稀疏光流特征
 	vector<Point2f>::iterator it;
 	for (it = corners0.begin(); it != corners0.end(); it++)
 	{
-		circle(trait, *it, 1, Scalar(255, 0, 255), 1, 8, 0);
+		circle(trait, *it, 3, Scalar(255, 0, 255), 1, 8, 0);
 	}
 	for (it = corners1.begin(); it != corners1.end(); it++)
 	{
-		circle(trait, *it, 1, Scalar(255, 0, 255), 1, 8, 0);
+		circle(trait, *it, 3, Scalar(255, 0, 255), 1, 8, 0);
 	}
 	return trait;
 }
